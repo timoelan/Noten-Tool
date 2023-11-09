@@ -1,0 +1,25 @@
+###
+GET http://localhost:3000/list-grades
+Content-Type: application/json
+
+
+###
+POST http://localhost:3000/add-grade HTTP/1.1
+Content-Type: application/json
+
+{
+    "date": "2023-10-25T19:02:47.284Z",
+    "grade": 5,
+    "subject": "mathi"
+}
+
+###
+POST http://localhost:3000/update-account HTTP/1.1
+Content-Type: application/json
+
+{
+    "id": 4,
+    "name": "test",
+    "email": "test@aq1.ch",
+    "password": "test5678"
+}

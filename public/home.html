@@ -1,0 +1,202 @@
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>Notentool</title>
+        <link rel="stylesheet" href="main.css" />
+        <script src="addSubject.js"></script>
+        <script src="filterGradeListForSubject.js"></script>
+        <script src="subjectsFromGradeList.js"></script>
+        <script>
+            function addToDb() {
+                const subject = document.getElementById('add-Subject').value
+                const grade = document.getElementById('add-Grade').value
+                const date = document.getElementById('add-Date').value
+                const data = { grade, date, subject }
+                console.log('jea it workt', { data })
+
+                fetch('/add-grade', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                }).then(
+                    (res) => {
+                        getGrades()
+                        console.log('Request complete! response:', res)
+                    },
+                    (error) => {
+                        console.log('Request failed! response:', error)
+                    }
+                )
+            }
+
+            function getGrades() {
+                fetch('/list-grades')
+                    .then(function (response) {
+                        // The response is a Response instance.
+                        // You parse the data into a useable format using `.json()`
+                        return response.json()
+                    })
+                    .then(function (data) {
+                        // `data` is the parsed version of the JSON returned from the above endpoint.
+                        console.log(data) // { "userId": 1, "id": 1, "title": "...", "body": "..." }
+                        const gradelist = document.getElementById('gradelist')
+
+                        gradelist.innerHTML = ''
+
+                        const subjects = subjectsFromGradeList(data)
+                        for (const subject of subjects) {
+                            //write Title (subject)
+                            const title = document.createElement('div')
+                            title.innerHTML = subject
+                            gradelist.appendChild(title)
+
+                            console.log('subject', subject)
+                            // create table
+                            const table = document.createElement('table')
+                            table.innerHTML = `
+                            <td>Date</td>
+                            <td>Fach</td>
+                            <td>Note</td>
+                            `
+
+                            gradelist.appendChild(table)
+                            const allGradesOfSubject =
+                                filterGradeListForSubject(data, subject)
+                            // for grade in allGradesOfSubject
+
+                            const tableBody =
+                                document.getElementById('gradeBody')
+                            //
+                            for (const grade of allGradesOfSubject) {
+                                console.log('> grade', grade)
+
+                                const newRow = document.createElement('tr')
+                                newRow.innerHTML = `
+                                <td>${grade.date}</td>
+                                <td>${grade.subject}</td>
+                                <td>${grade.grade}</td>
+                                `
+
+                                table.appendChild(newRow)
+                            }
+                        }
+                    })
+            }
+        </script>
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.1/css/all.min.css">  -->
+        <script>
+            // self executing function here
+            ;(function () {
+                getGrades()
+            })()
+        </script>
+    </head>
+
+    <body>
+        <div class="container">
+            <h1>Notentool</h1>
+            <div class="addSubjectToDb">
+                <input id="add-Subject" type="text" placeholder="Subject" />
+
+                <input id="add-Grade" type="text" placeholder="Grade" />
+                <input id="add-Date" type="date" placeholder="Date" />
+                <!-- <button class="todayBtn" onclick="setTimeToday()">Today</button> -->
+                <button class="addToDbBtn" onclick="addToDb()">+</button>
+            </div>
+            <button id="semester1Btn">Semester 1 2023</button>
+            <div id="semester1">
+                <script>
+                    const semester1 = document.getElementById('semester1Btn')
+                    if (semester1)
+                        semester1.addEventListener('click', onClicksSemesterBtn)
+                    const semesterSwitch = document.getElementById('semester1')
+
+                    function onClicksSemesterBtn(event) {
+                        semesterSwitch.classList.toggle('visible')
+                        console.log('test')
+                        event.preventDefault()
+                    }
+                </script>
+                <div id="gradelist"></div>
+
+                <!-- <script>
+                function setTimeToday() {
+                    document.getElementById('add-Date').value = today()
+                    console.log('I will work')
+                }
+
+                function today() {
+                    const dateobj = new Date()
+
+                    const B = dateobj.toISOString()
+                    console.log('The Date and Time from now is:', { B })
+                    return dateobj
+                }
+
+                i
+            </script> -->
+
+                <!-- <h1>Notendurchschnitt berechnen</h1>
+        <input type="text" id="notenInput" placeholder="Geben Sie Ihre Noten ein (getrennt durch Leerzeichen)">
+        <button onclick="berechneDurchschnitt()">Berechnen</button>
+        <p id="ergebnis"></p>
+    
+        <script>
+            function berechneDurchschnitt() {
+                var notenStr = document.getElementById("notenInput").value;
+                var noten = notenStr.split(" ").map(parseFloat);
+    
+                var summe = 0;
+                for (var i = 0; i < noten.length; i++) {
+                    summe += noten[i];
+                }
+    
+                var durchschnitt = summe / noten.length;
+                document.getElementById("ergebnis").innerHTML = "Ihr Notendurchschnitt ist: " + durchschnitt.toFixed(2);
+            }
+
+
+
+        </script> -->
+
+                <!-- <i class="fas fa-calculator calculator-icon"></i> -->
+
+                <!-- <table id="gradeTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Fach</th>
+                            <th>Note</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gradeBody"></tbody>
+                </table> -->
+            <!-- </div> -->
+            <!-- <div id="semester2">
+                <button>Semester 2 2023</button>
+                <table>
+                    <tr>
+                        <th>Fach</th>
+                        <th>Note</th>
+                    </tr>
+                    <tr>
+                        <td>Modul 192</td>
+                        <td><input type="text"></td> -->
+            <!-- </tr>
+                    <tr>
+                        <td>Modul 319</td>
+                        <td><input type="text"></td>
+                    </tr>
+                </table>
+            </div> -->
+            <!-- <button
+                class="add-button"
+                onclick="addSubject('Wintersemester 2023')"
+            >
+                +
+            </button> -->
+        </div>
+    </body>
+</html>

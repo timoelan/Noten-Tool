@@ -1,0 +1,24 @@
+{
+  "name": "mysql-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon ./src/server/index.js localhost 3000",
+    "test": "vitest"
+  },
+  "author": "Janic Bosshard <janic.bosshard@swisscom.com>",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "date-fns": "^2.30.0",
+    "express": "^4.18.2",
+    "mysql2": "^3.6.1",
+    "vitest": "^0.34.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "prettier": "^3.0.3"
+  }
+}
