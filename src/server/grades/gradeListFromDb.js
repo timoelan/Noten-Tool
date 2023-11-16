@@ -5,7 +5,7 @@ export function gradeListFromDb() {
 
     return new Promise((resolve, reject) => {
         connection().query(
-            'SELECT *  FROM accounts.grades',
+            'SELECT *  FROM grades',
             (error, result) => {
                 if (error) {
                     reject(error)

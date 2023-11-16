@@ -3,9 +3,9 @@ import { createConnection } from 'mysql2'
 export function initDatabase() {
     internalConnection = createConnection({
         host: 'localhost',
-        user: 'root',
-        password: 'admin',
-        database: 'accounts',
+        user: 'gradetool',
+        password: 'gradetool',
+        database: 'db',
     })
 }
 
