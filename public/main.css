@@ -3,8 +3,7 @@
     display: flex;
     flex-direction: column;
     text-align: center;
-    height: 100%;
-    width: 100%;
+
 }
 
 html{
@@ -36,12 +35,37 @@ html{
     border: none;
 }
 
-/* Das hier oben ist für die Login seite */
+/* The part abowe me ist for the Login page */
 
-/* Das hier unten ist für die Nootentool seite  */
+/* The part under me is for the Gradetool  */
 
 
+#loginpage.visible{
+    display: none;
+}
 
+#loginpage{
+    visibility: visible;
+}
+
+
+.loginpadge1{
+    border: #333;
+    background-color: #007bff;
+    height: 100%;
+    width: 100%;
+}
+
+#btnlogin{
+    border: none;
+    background: none;
+    }
+    
+    
+    
+.btnlogin:hover{
+    color: #0056b3;
+}
 
 
 #semester1.visible{
@@ -64,7 +88,7 @@ body {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #fff;
+    background-color: #ffffffcc;
     border: 1px solid #ddd;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
